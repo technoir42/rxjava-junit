@@ -1,0 +1,33 @@
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.bintray"
+
+tasks.register("packageSources", Jar.class) {
+    from sourceSets.main.allSource
+    archiveClassifier = "sources"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact packageSources
+        }
+    }
+}
+
+bintray {
+    user = findProperty("BINTRAY_USER")
+    key = findProperty("BINTRAY_KEY")
+    publish = true
+
+    pkg {
+        repo = "maven"
+        name = "rxjava-junit"
+        licenses = ["Apache-2.0"]
+        vcsUrl = "https://github.com/technoir42/rxjava-junit.git"
+        version {
+            name = project.version
+        }
+        publications = ["maven"]
+    }
+}

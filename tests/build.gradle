@@ -1,0 +1,45 @@
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
+}
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+
+    libraryVariants.all {
+        it.generateBuildConfigProvider.configure { enabled = false }
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues true
+
+            all {
+                useJUnitPlatform()
+            }
+        }
+    }
+}
+
+dependencies {
+    testImplementation project(":rxjava2-junit4")
+    testImplementation project(":rxjava2-junit5")
+    testImplementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    testCompileOnly "junit:junit:$versions.junit.four"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$versions.junit.jupiter"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$versions.junit.jupiter"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$versions.junit.vintage"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:$versions.junit.platform"
+}

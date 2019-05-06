@@ -1,0 +1,6 @@
+rootProject.name = "rxjava-junit"
+
+include ":rxjava2-junit-common"
+include ":rxjava2-junit4"
+include ":rxjava2-junit5"
+include ":tests"
